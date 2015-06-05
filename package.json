@@ -1,0 +1,15 @@
+{
+    "version": "0.0.1",
+    "name": "com.googleforgiv.plugin",
+    "cordova_name": "googleforgiv",
+    "description": "Use your Google account to authenticate with the app.",
+    "platforms": [
+        "android"
+    ],
+    "engines": [
+        {
+            "name": "cordova",
+            "version": ">=3.3.0"
+        }
+    ]
+}

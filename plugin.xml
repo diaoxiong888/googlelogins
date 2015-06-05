@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.googleforgiv" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+  <name>googleforgiv</name>
+  <description>Use your Google account to authenticate with the app.</description>
+  <info>
+    This is a google login plugin.
+  </info>
+  <engines>
+    <engine name="cordova" version=">=3.3.0"/>
+  </engines>
+  <!--define js-->
+  <js-module name="googleforgiv" src="www/googleforgiv.js">
+    <clobbers target="googleforgiv" />
+    <!--js object name used in app-->
+  </js-module>
+
+  
+  
+  <!-- android -->
+  <platform name="android">
+    <dependency id="com.google.playservices" url="https://github.com/MobileChromeApps/google-play-services" />
+
+    <!--config info need write to config.xml file-->
+    <config-file parent="/*" target="res/xml/config.xml">
+      <feature name="googleforgiv">
+        <!--com.googleforgiv.googleforgiv is our class qualified name-->
+        <param name="android-package" value="com.googleforgiv.googleforgiv" />
+        <param name="onload" value="true" />
+      </feature>
+      <access origin="https://accounts.google.com/*" />
+    </config-file>
+
+    <!--config info need write to AndroidManifest.xml file-->
+    <config-file parent="/*" target="AndroidManifest.xml">
+      <!--define permission-->
+      <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+      <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    </config-file>
+
+    <!--define where to move the java code file-->
+    <source-file src="src/android/googleforgiv.java" target-dir="src/com/googleforgiv/googleforgiv" />
+  </platform>
+
+</plugin>
