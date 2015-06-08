@@ -53,13 +53,15 @@ public class googleforgiv extends CordovaPlugin implements ConnectionCallbacks, 
   public static final String ARGUMENT_ANDROID_KEY = "androidApiKey";
   public static final String ARGUMENT_WEB_KEY = "webApiKey";
 
+  public static final String LOGIN_KEY = "withUserInfo";
   // Wraps our service connection to Google Play services and provides access to the users sign in state and Google APIs
   private GoogleApiClient mGoogleApiClient;
   private String apiKey, webKey;
   private CallbackContext savedCallbackContext;
   private boolean trySilentLogin;
   private boolean loggingOut;
-
+  private String loginKey;
+  
   @Override
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
     super.initialize(cordova, webView);
@@ -69,13 +71,16 @@ public class googleforgiv extends CordovaPlugin implements ConnectionCallbacks, 
   @Override
   public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
     this.savedCallbackContext = callbackContext;
-
-    if (args.optJSONObject(0) != null){
-      JSONObject obj = args.getJSONObject(0);
-      System.out.println(obj);
-      this.webKey = obj.optString(ARGUMENT_WEB_KEY, null);
-      this.apiKey = obj.optString(ARGUMENT_ANDROID_KEY, null);
-    }
+    
+    //get first argument,this maybe is a key.
+    this.loginKey=args.getString(0);
+    
+//    if (args.optJSONObject(0) != null){
+//      JSONObject obj = args.getJSONObject(0);
+//      System.out.println(obj);
+//      this.webKey = obj.optString(ARGUMENT_WEB_KEY, null);
+//      this.apiKey = obj.optString(ARGUMENT_ANDROID_KEY, null);
+//    }
 
     if (ACTION_IS_AVAILABLE.equals(action)) {
       final boolean avail = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this.cordova.getActivity().getApplicationContext()) == 0;
@@ -160,7 +165,11 @@ public class googleforgiv extends CordovaPlugin implements ConnectionCallbacks, 
 //            result.put("oauthToken", token);
 //          } else {
             // Retrieve the oauth token with offline mode
-			 scope = "oauth2:" + Scopes.PLUS_LOGIN+" https://www.googleapis.com/auth/userinfo.email";
+        	if(loginKey==LOGIN_KEY)//if loginkey is a value of LOGIN_KEY
+        		scope =  "oauth2:" + Scopes.PLUS_LOGIN;
+        	else
+        		scope = "oauth2:" + Scopes.PLUS_LOGIN+" https://www.googleapis.com/auth/userinfo.email";
+        	
             token = GoogleAuthUtil.getToken(context, email, scope);
             result.put("oauthToken", token);
 			result.put("scope", scope);
