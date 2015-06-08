@@ -13,7 +13,7 @@ var googleforgiv = {
     },
 
     loginWithUserInfo: function (options, successCallback, errorCallback) {
-        exec(successCallback, errorCallback, 'googleforgiv', 'login', ["withUserInfo"]);
+        exec(successCallback, errorCallback, 'googleforgiv', 'login', [options]);
     },
 
     trySilentLogin: function (options, successCallback, errorCallback) {
