@@ -165,10 +165,10 @@ public class googleforgiv extends CordovaPlugin implements ConnectionCallbacks, 
 //            result.put("oauthToken", token);
 //          } else {
             // Retrieve the oauth token with offline mode
-        	if(loginKey==LOGIN_KEY)//if loginkey is a value of LOGIN_KEY
+        	//if(loginKey==LOGIN_KEY)//if loginkey is a value of LOGIN_KEY
         		scope =  "oauth2:" + Scopes.PLUS_LOGIN;
-        	else
-        		scope = "oauth2:" + Scopes.PLUS_LOGIN+" https://www.googleapis.com/auth/userinfo.email";
+        	//else
+        	//	scope = "oauth2:" + Scopes.PLUS_LOGIN+" https://www.googleapis.com/auth/userinfo.email";
         	
             token = GoogleAuthUtil.getToken(context, email, scope);
             result.put("oauthToken", token);
