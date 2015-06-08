@@ -53,14 +53,14 @@ public class googleforgiv extends CordovaPlugin implements ConnectionCallbacks, 
   public static final String ARGUMENT_ANDROID_KEY = "androidApiKey";
   public static final String ARGUMENT_WEB_KEY = "webApiKey";
 
-  public static final String LOGIN_KEY = "withUserInfo";
+
   // Wraps our service connection to Google Play services and provides access to the users sign in state and Google APIs
   private GoogleApiClient mGoogleApiClient;
   private String apiKey, webKey;
   private CallbackContext savedCallbackContext;
   private boolean trySilentLogin;
   private boolean loggingOut;
-  private String loginKey;
+
   
   @Override
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -73,7 +73,7 @@ public class googleforgiv extends CordovaPlugin implements ConnectionCallbacks, 
     this.savedCallbackContext = callbackContext;
     
     //get first argument,this maybe is a key.
-    this.loginKey=args.getString(0);
+//    this.loginKey=args.getString(0);
     
 //    if (args.optJSONObject(0) != null){
 //      JSONObject obj = args.getJSONObject(0);
@@ -138,6 +138,7 @@ public class googleforgiv extends CordovaPlugin implements ConnectionCallbacks, 
         .addApi(Plus.API, Plus.PlusOptions.builder().build())
         .addScope(Plus.SCOPE_PLUS_LOGIN)
         .addScope(Plus.SCOPE_PLUS_PROFILE)
+        
         .build();
   }
 
@@ -165,10 +166,8 @@ public class googleforgiv extends CordovaPlugin implements ConnectionCallbacks, 
 //            result.put("oauthToken", token);
 //          } else {
             // Retrieve the oauth token with offline mode
-        	if(loginKey==LOGIN_KEY)//if loginkey is a value of LOGIN_KEY
-        		scope =  "oauth2:" + Scopes.PLUS_LOGIN;
-        	else
-        		scope = "oauth2:" + Scopes.PLUS_LOGIN+" https://www.googleapis.com/auth/userinfo.email";
+        	
+        	scope = "oauth2:" + Scopes.PLUS_LOGIN+" https://www.googleapis.com/auth/userinfo.email";
         	
             token = GoogleAuthUtil.getToken(context, email, scope);
             result.put("oauthToken", token);
